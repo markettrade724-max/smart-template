@@ -1,0 +1,58 @@
+/**
+ * ملف لعبة تم توليده بواسطة Smart Engineer
+ * اسم اللعبة: <%= spec.name %>
+ * الصعوبة: <%= spec.difficulty %>
+ * الميكانيكيات: <%= spec.mechanics.join(', ') %>
+ * الوقت المقدر: <%= spec.estimatedPlayTime %> دقيقة
+ * تاريخ التوليد: <%= spec.timestamp %>
+ */
+
+class Game {
+    constructor() {
+        this.name = "<%= spec.name %>";
+        this.difficulty = <%= spec.difficulty %>;
+        this.mechanics = <%- JSON.stringify(spec.mechanics) %>;
+        this.state = "initialized";
+    }
+
+    start() {
+        console.log(`🎮 بدء لعبة: ${this.name}`);
+        console.log(`⚙️ الميكانيكيات المفعلة: ${this.mechanics.join(' + ')}`);
+        console.log(`📈 مستوى الصعوبة: ${this.difficulty}/10`);
+        
+        // منطق اللعبة المُولد ديناميكياً
+        <% spec.mechanics.forEach(mechanic => { %>
+            this.init<%- mechanic.replace(/\s+/g, '') %>Mechanic();
+        <% }); %>
+        
+        this.state = "running";
+    }
+
+    <% spec.mechanics.forEach(mechanic => { %>
+    init<%- mechanic.replace(/\s+/g, '') %>Mechanic() {
+        console.log(`   ➕ تفعيل نظام: <%= mechanic %>`);
+        // هنا يمكن إضافة كود معقد خاص بكل ميكانيكا
+    }
+    <% }); %>
+
+    getInfo() {
+        return {
+            name: this.name,
+            difficulty: this.difficulty,
+            mechanics: this.mechanics,
+            playTimeEstimate: <%= spec.estimatedPlayTime %>
+        };
+    }
+}
+
+// تصدير اللعبة (في بيئة Node.js)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Game;
+}
+
+// إذا تم تشغيل الملف مباشرة، ابدأ اللعبة
+if (require.main === module) {
+    const game = new Game();
+    game.start();
+    console.log('📋 معلومات اللعبة:', game.getInfo());
+}
