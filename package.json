@@ -1,0 +1,17 @@
+{
+  "name": "smart-template-engineer",
+  "version": "1.0.0",
+  "description": "مهندس قوالب ذكي يتعلم من البيانات ويولد قوالب جديدة",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "train": "node index.js --train",
+    "generate": "node index.js --generate"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "fs-extra": "^11.1.1"
+  },
+  "author": "",
+  "license": "MIT"
+}
